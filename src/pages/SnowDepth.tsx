@@ -21,14 +21,7 @@ function SnowDepth() {
     }, []);
 
     console.log(depths);
-    let labelsStrs = Object.keys(depths); // Extract timestamps
-    let labels = []
-    for (let labelStr of labelsStrs) {
-        const dt = new Date(labelStr);
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const label = months[dt.getMonth()] + "/" + dt.getDate()
-        labels.push(label);
-    }
+    let labels = Object.keys(depths); // Extract timestamps
     const values = Object.values(depths); // Extract numeric values
 
     // Chart.js data
@@ -36,12 +29,12 @@ function SnowDepth() {
         labels, // x-axis labels
         datasets: [
             {
-                label: 'Snow Depth per Hour',
                 data: values, // y-axis values
                 borderColor: 'rgba(75,192,192,1)',
                 backgroundColor: 'rgba(75,192,192,0.2)',
                 tension: 0.3, // Smooth lines
-            },
+            }
+
         ],
     };
 
@@ -50,7 +43,7 @@ function SnowDepth() {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top' as const,
+                display: false,
             },
         },
         scales: {
@@ -63,10 +56,18 @@ function SnowDepth() {
             y: {
                 title: {
                     display: true,
-                    text: 'Value',
+                    text: 'Snow Depth (cm)',
                 },
             },
         },
+        elements: {
+            line: {
+                tension: 0.8 // Adjust smoothing level
+            },
+            point: {
+                radius: 3
+            }
+        }
     };
 
     return <>

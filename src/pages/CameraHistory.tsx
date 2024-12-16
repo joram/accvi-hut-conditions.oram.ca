@@ -6,6 +6,7 @@ import {fetchFiles} from "../utils/list_s3_files.ts";
 import TimePicker from "../components/TimePicker.tsx";
 import "./CameraHistory.css"
 import Header from "../components/Header.tsx";
+import ImageWithSpinner from "../components/ImageWithSpinner.tsx";
 
 function CameraHistory() {
     const [imageFiles, setImageFiles] = useState<string[]>([]);
@@ -73,6 +74,7 @@ function CameraHistory() {
     }
 
     const isMobile = window.innerWidth < 800;
+    const src = "https://s3.ca-central-1.amazonaws.com/5040-hut-data.oram.ca/" + selectedFile
     return (
         <>
             <Header/>
@@ -89,7 +91,7 @@ function CameraHistory() {
 
                 <TimePicker timestamps={timestamps} onChange={onTimeChange}/>
             </div>
-            <img src={"https://s3.ca-central-1.amazonaws.com/5040-hut-data.oram.ca/" + selectedFile} alt="webcam image"/>
+            <ImageWithSpinner key={src} src={src} alt="webcam image" />
         </>
     );
 }

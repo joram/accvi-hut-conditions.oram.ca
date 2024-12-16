@@ -1,0 +1,25 @@
+.spinner-container {
+    padding-top: 80px;
+}
+
+.spinner {
+    display: none;
+
+}
+.spinner.loading {
+    display: inline-block;
+    animation: spin 2s linear infinite;
+}
+
+
+.image.loading {
+    display: none;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
