@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {fetchFiles} from "../utils/list_s3_files.ts";
 import TimePicker from "../components/TimePicker.tsx";
 import "./CameraHistory.css"
+import Header from "../components/Header.tsx";
 
 function CameraHistory() {
     const [imageFiles, setImageFiles] = useState<string[]>([]);
@@ -71,17 +72,21 @@ function CameraHistory() {
         return <h1>Loading...</h1>
     }
 
+    const isMobile = window.innerWidth < 800;
     return (
         <>
-            <h1>Camera History</h1>
-            <div id="image-picker">
-                <DatePicker
-                    selected={date}
-                    onChange={(date) => {
-                        if (date === null) return;
-                        setDate(date);
-                    }}
-                />
+            <Header/>
+            <div id="image-picker" className={isMobile ? "mobile" : ""}>
+                <div id="image-picker-dp">
+                    <DatePicker
+                        selected={date}
+                        onChange={(date) => {
+                            if (date === null) return;
+                            setDate(date);
+                        }}
+                    />
+                </div>
+
                 <TimePicker timestamps={timestamps} onChange={onTimeChange}/>
             </div>
             <img src={"https://s3.ca-central-1.amazonaws.com/5040-hut-data.oram.ca/" + selectedFile} alt="webcam image"/>

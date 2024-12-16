@@ -4,7 +4,7 @@ from datetime import datetime
 
 import requests
 from dotenv import load_dotenv
-
+import boto3
 
 def get_inverter_data():
     load_dotenv(".env")
@@ -19,8 +19,15 @@ def get_inverter_data():
     response = sess.get(data_url)
     return response.json()
 
+def save_to_s3(data, key):
+    session = boto3.Session(profile_name='personal')
+    s3 = session.client('s3')
+    s3.put_object(Bucket='5040-hut-data.oram.ca', Key=key, Body=str(data))
+
 
 if __name__ == "__main__":
     data = get_inverter_data()
     percentage_charged = data["b_state_of_charge"]
     print(f"Percentage charged: {percentage_charged}")
+    now = datetime.now()
+    save_to_s3(data, f"inverter_data/{now.year}-{now.month}-{now.day}/{now.year}-{now.month}-{now.day}T{now.hour}.json")
