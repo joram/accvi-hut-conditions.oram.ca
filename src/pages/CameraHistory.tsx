@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "../App.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {fetchFiles} from "./list_s3_files.ts";
-import TimePicker from "./TimePicker.tsx";
+import {fetchFiles} from "../utils/list_s3_files.ts";
+import TimePicker from "../components/TimePicker.tsx";
 import "./CameraHistory.css"
 
 function CameraHistory() {
