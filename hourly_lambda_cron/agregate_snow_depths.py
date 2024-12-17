@@ -31,7 +31,7 @@ def save_to_s3(data, key):
 def run():
     bucket_name = '5040-hut-data.oram.ca'
     summary_key = "snow_depth/summary.json"
-    files = list_snowdepth_s3_files(bucket_name, ".")
+    files = list_snowdepth_s3_files(bucket_name, "snow_depth/")
 
     data = {}
     try:

@@ -7,20 +7,52 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 
 function SnowDepth() {
-    let [depths, setDepths] = React.useState([]);
+    let [depths, setDepths] = React.useState({});
 
     React.useEffect(() => {
-        const url = `https://s3.ca-central-1.amazonaws.com/5040-hut-data.oram.ca/snow_depths.json`;
-        fetch(url).then((response) => {
+        const url = `https://s3.ca-central-1.amazonaws.com/5040-hut-data.oram.ca/snow_depth/summary.json`;
 
-            response.text().then((data) => {
-                const dataJson = JSON.parse(data.replace(/'/g, '"'));
-                setDepths(dataJson);
-            });
-        });
+        fetch(url)
+            .then((response) => response.json()) // Directly parse as JSON
+            .then((dataJson) => {
+                const bucketed: any  = {};
+
+                // Process each entry in the data
+                Object.entries(dataJson.values).forEach(([key, value]) => {
+                    if (value === 0) return; // Skip zero values
+
+                    // Format the date
+                    const [dateStr, timeStr] = key.split("T");
+                    const timeFormatted = timeStr.replace(/-/g, ":").replace("Z", ""); // Replace '-' with ':' in time
+                    const isoString = `${dateStr}T${timeFormatted}Z`;
+                    const date = new Date(isoString);
+
+                    // Filter hours between 6 AM and 6 PM
+                    const hour = date.getHours();
+                    if (hour < 6 || hour > 18) return;
+
+                    // Bucket by "MM/DD AM/PM"
+                    const ampm = hour >= 12 ? "PM" : "AM";
+                    const bucketKey = `${date.getMonth() + 1}/${date.getDate()} ${ampm}`;
+
+                    // Initialize and push values to the bucket
+                    if (!bucketed[bucketKey]) bucketed[bucketKey] = [];
+                    bucketed[bucketKey].push(value);
+                });
+
+                // Calculate averages for each bucket
+                const bucketedAverages: any = {};
+                Object.entries(bucketed).forEach(([key, values]: [string, any]) => {
+                    const sum = values.reduce((a: any, b: any) => a + b, 0);
+                    bucketedAverages[key] = sum / values.length;
+                });
+
+                // Update state with bucketed averages
+                setDepths(bucketedAverages);
+            })
+            .catch((error) => console.error("Error fetching or parsing data:", error));
     }, []);
 
-    console.log(depths);
     let labels = Object.keys(depths); // Extract timestamps
     const values = Object.values(depths); // Extract numeric values
 

@@ -43,7 +43,8 @@ def build_json():
             key = os.path.basename(file)
             key = key.replace(".json", "")
             key = key.split("_")[0]
-            data["values"][key] = json.loads(content)
+            battery_percent = json.loads(content)["b_state_of_charge"]
+            data["values"][key] = float(battery_percent)
     return data
 
 def save_to_s3(data, key):

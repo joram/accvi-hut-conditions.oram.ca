@@ -12,6 +12,8 @@ const Sidebar: React.FC<{ }> = ({ }) => {
                 <Link className="menu-item" to="/">Home</Link>
                 <Link className="menu-item" to="/camera">Camera</Link>
                 <Link className="menu-item" to="/snow_depth">Snow Depth</Link>
+                <Link className="menu-item" to="/batteries">Battery Charge</Link>
+                <Link className="menu-item" to="/weather_forecast">Weather Forecast</Link>
             </div>
             <div className={`overlay ${isOpen ? "visible" : ""}`} onClick={() => setIsOpen(false)}></div>
             <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
