@@ -35,7 +35,14 @@ function BatteryCharge() {
     }, []);
 
     let labels = Object.keys(batteryCharge); // Extract timestamps
-    const values = Object.values(batteryCharge); // Extract numeric values
+    labels = labels.sort()
+
+    const values: any [] = []
+    labels.forEach((k) => {
+        // @ts-ignore
+        const v = batteryCharge[k];
+        values.push(v);
+    })
 
     // Chart.js data
     const chartData = {

@@ -12,7 +12,7 @@ def list_inverter_data_s3_files(bucket_name):
     files = []
     for page in pages:
         files.extend([content['Key'] for content in page['Contents']])
-    files = [f for f in files if f != "inverter_data/inverter_data.json"]
+    files = [f for f in files if f != "inverter_data/summary.json"]
     return files
 
 def get_s3_file_content(bucket_name, key):
