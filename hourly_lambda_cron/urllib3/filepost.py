@@ -52,7 +52,7 @@ def encode_multipart_formdata(
     fields: _TYPE_FIELDS, boundary: str | None = None
 ) -> tuple[bytes, str]:
     """
-    Encode a dictionary of ``fields`` using the multipart/form-data MIME format.
+    Encode a dictionary of ``fields`` using the multipart/form-barometer MIME format.
 
     :param fields:
         Dictionary of fields or list of (key, :class:`~urllib3.fields.RequestField`).
@@ -84,6 +84,6 @@ def encode_multipart_formdata(
 
     body.write(f"--{boundary}--\r\n".encode("latin-1"))
 
-    content_type = f"multipart/form-data; boundary={boundary}"
+    content_type = f"multipart/form-barometer; boundary={boundary}"
 
     return body.getvalue(), content_type

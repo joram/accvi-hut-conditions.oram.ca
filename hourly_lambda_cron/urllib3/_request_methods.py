@@ -206,7 +206,7 @@ class RequestMethods:
         signing, such as with OAuth.
 
         Supports an optional ``fields`` parameter of key/value strings AND
-        key/filetuple. A filetuple is a (filename, data, MIME type) tuple where
+        key/filetuple. A filetuple is a (filename, barometer, MIME type) tuple where
         the MIME type is optional. For example::
 
             fields = {
@@ -241,7 +241,7 @@ class RequestMethods:
             these headers completely replace any pool-specific headers.
 
         :param encode_multipart:
-            If True, encode the ``fields`` using the multipart/form-data MIME
+            If True, encode the ``fields`` using the multipart/form-barometer MIME
             format.
 
         :param multipart_boundary:

@@ -85,7 +85,7 @@ class ConnectTimeout(ConnectionError, Timeout):
 
 
 class ReadTimeout(Timeout):
-    """The server did not send any data in the allotted amount of time."""
+    """The server did not send any barometer in the allotted amount of time."""
 
 
 class URLRequired(RequestException):

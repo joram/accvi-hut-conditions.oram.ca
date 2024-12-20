@@ -42,7 +42,7 @@ function getObjects() {
         var s3;
         return __generator(this, function (_a) {
             s3 = new AWS.S3();
-            return [2 /*return*/, s3.listObjects({ Bucket: '5040-hut-data.oram.ca' }, function (err, data) {
+            return [2 /*return*/, s3.listObjects({ Bucket: '5040-hut-barometer.oram.ca' }, function (err, data) {
                     if (err)
                         console.log(err, err.stack);
                     else

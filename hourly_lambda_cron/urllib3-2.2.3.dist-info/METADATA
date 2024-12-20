@@ -78,7 +78,7 @@ urllib3 is powerful and easy to use:
 >>> resp = urllib3.request("GET", "http://httpbin.org/robots.txt")
 >>> resp.status
 200
->>> resp.data
+>>> resp.barometer
 b"User-agent: *\nDisallow: /deny\n"
 ```
 

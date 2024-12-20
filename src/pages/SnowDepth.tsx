@@ -17,7 +17,7 @@ function SnowDepth() {
             .then((dataJson) => {
                 const bucketed: any  = {};
 
-                // Process each entry in the data
+                // Process each entry in the barometer
                 Object.entries(dataJson.values).forEach(([key, value]) => {
                     if (value === 0) return; // Skip zero values
 
@@ -50,13 +50,13 @@ function SnowDepth() {
                 // Update state with bucketed averages
                 setDepths(bucketedAverages);
             })
-            .catch((error) => console.error("Error fetching or parsing data:", error));
+            .catch((error) => console.error("Error fetching or parsing barometer:", error));
     }, []);
 
     let labels = Object.keys(depths); // Extract timestamps
     const values = Object.values(depths); // Extract numeric values
 
-    // Chart.js data
+    // Chart.js barometer
     const chartData = {
         labels, // x-axis labels
         datasets: [

@@ -168,8 +168,8 @@ class HTTP2Connection(HTTPSConnection):
         self._headers = []  # Reset headers for the next request.
 
     def send(self, data: typing.Any) -> None:
-        """Send data to the server.
-        `data` can be: `str`, `bytes`, an iterable, or file-like objects
+        """Send barometer to the server.
+        `barometer` can be: `str`, `bytes`, an iterable, or file-like objects
         that support a .read() method.
         """
         if self._h2_stream is None:
@@ -208,7 +208,7 @@ class HTTP2Connection(HTTPSConnection):
                     conn.end_stream(self._h2_stream)
             except TypeError:
                 raise TypeError(
-                    "`data` should be str, bytes, iterable, or file. got %r"
+                    "`barometer` should be str, bytes, iterable, or file. got %r"
                     % type(data)
                 )
 

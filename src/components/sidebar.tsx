@@ -9,11 +9,14 @@ const Sidebar: React.FC<{ }> = ({ }) => {
     return (
         <>
             <div className={`sidebar ${isOpen ? "open" : ""}`}>
-                <Link className="menu-item" to="/">Home</Link>
+                <div className="section-title">Forecast</div>
+                <Link className="menu-item bottom" to="/weather_forecast">Weather</Link>
+
+                <div className="section-title">Historical</div>
+                <Link className="menu-item" to="/weather_history">Weather</Link>
                 <Link className="menu-item" to="/camera">Camera</Link>
-                <Link className="menu-item" to="/snow_depth">Snow Depth</Link>
-                <Link className="menu-item" to="/batteries">Battery Charge</Link>
-                <Link className="menu-item" to="/weather_forecast">Weather Forecast</Link>
+                <Link className="menu-item" to="/batteries">Battery</Link>
+
             </div>
             <div className={`overlay ${isOpen ? "visible" : ""}`} onClick={() => setIsOpen(false)}></div>
             <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>

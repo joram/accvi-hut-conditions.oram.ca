@@ -21,7 +21,7 @@ def get_s3_file_content(bucket_name, key):
     return response['Body'].read().decode('utf-8')
 
 def build_json():
-    bucket_name = '5040-hut-data.oram.ca'
+    bucket_name = '5040-hut-barometer.oram.ca'
     files = list_inverter_data_s3_files(bucket_name)
     summary_key = "inverter_data/summary.json"
 
@@ -50,7 +50,7 @@ def build_json():
 def save_to_s3(data, key):
     session = boto3.Session()
     s3 = session.client('s3')
-    s3.put_object(Bucket='5040-hut-data.oram.ca', Key=key, Body=json.dumps(data, indent=4))
+    s3.put_object(Bucket='5040-hut-barometer.oram.ca', Key=key, Body=json.dumps(data, indent=4))
 
 
 def run():

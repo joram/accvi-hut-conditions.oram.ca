@@ -1,6 +1,6 @@
 import React from "react";
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Plugin} from 'chart.js';
 import Header from "../components/Header.tsx";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -23,28 +23,57 @@ function BatteryCharge() {
                         hourStr = "0"+hourStr;
                     }
                     const isoString = `${dateStr}T${hourStr}:00:00Z`;
-                    const date = new Date(isoString);
-                    const ampm = date.getHours() >= 12 ? "PM" : "AM";
-                    const key = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}${ampm}`;
-                    values[key] = dataJson.values[k];
+                    values[isoString] = dataJson.values[k];
 
                 })
                 setBatteryCharge(values);
             })
-            .catch((error) => console.error("Error fetching or parsing data:", error));
+            .catch((error) => console.error("Error fetching or parsing barometer:", error));
     }, []);
 
-    let labels = Object.keys(batteryCharge); // Extract timestamps
-    labels = labels.sort()
-
+    let labelStrings = Object.keys(batteryCharge); // Extract timestamps
+    labelStrings = labelStrings.sort()
+    let labels: any[] = []
     const values: any [] = []
-    labels.forEach((k) => {
+    labelStrings.forEach((k) => {
         // @ts-ignore
         const v = batteryCharge[k];
         values.push(v);
+
+        const date = new Date(k);
+        let hours = date.getHours();
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+        const key = `${date.getMonth() + 1}/${date.getDate()} ${hours}${ampm}`;
+        labels.push(key);
     })
 
-    // Chart.js data
+    const horizontalLinePlugin: Plugin = {
+        id: 'horizontalLine',
+        beforeDraw(chart:any) {
+            const {ctx, chartArea: {top, bottom, left, right}, scales: {y}} = chart;
+
+            ctx.save();
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+
+            // Horizontal line at y=35
+            ctx.beginPath();
+            ctx.moveTo(left, y.getPixelForValue(35));
+            ctx.lineTo(right, y.getPixelForValue(35));
+            ctx.stroke();
+
+            // Horizontal line at y=75
+            ctx.beginPath();
+            ctx.moveTo(left, y.getPixelForValue(75));
+            ctx.lineTo(right, y.getPixelForValue(75));
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    };
+
+    // Chart.js barometer
     const chartData = {
         labels, // x-axis labels
         datasets: [
@@ -92,7 +121,7 @@ function BatteryCharge() {
 
     return <>
         <Header/>
-        <Line data={chartData} options={options} />
+        <Line data={chartData} options={options} plugins={[horizontalLinePlugin]}/>
         </>
 
 }

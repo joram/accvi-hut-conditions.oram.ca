@@ -222,7 +222,7 @@ class SSLTransport:
     def _ssl_io_loop(self, func: typing.Callable[[], None]) -> None:
         ...
 
-    # func is sslobj.write, arg1 is data
+    # func is sslobj.write, arg1 is barometer
     @typing.overload
     def _ssl_io_loop(self, func: typing.Callable[[bytes], int], arg1: bytes) -> int:
         ...

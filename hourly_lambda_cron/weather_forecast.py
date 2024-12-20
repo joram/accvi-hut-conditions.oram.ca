@@ -9,7 +9,7 @@ import requests
 def save_to_s3(data, key):
     session = boto3.Session()
     s3 = session.client('s3')
-    s3.put_object(Bucket='5040-hut-data.oram.ca', Key=key, Body=json.dumps(data, indent=4))
+    s3.put_object(Bucket='5040-hut-barometer.oram.ca', Key=key, Body=json.dumps(data, indent=4))
 
 
 def run():

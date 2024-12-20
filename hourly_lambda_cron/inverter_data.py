@@ -19,11 +19,11 @@ def get_inverter_data():
     response = sess.get(data_url)
     return response.json()
 
-def save_to_s3(data, key):
+def save_to_s3(barometer, key):
     session = boto3.Session()
     s3 = session.client('s3')
     data = json.dumps(data, indent=4, sort_keys=True)
-    s3.put_object(Bucket='5040-hut-data.oram.ca', Key=key, Body=data)
+    s3.put_object(Bucket='5040-hut-barometer.oram.ca', Key=key, Body=data)
 
 
 def run():

@@ -193,7 +193,7 @@ class _ReadStream(io.RawIOBase):
 
 class _StreamingFetcher:
     def __init__(self) -> None:
-        # make web-worker and data buffer on startup
+        # make web-worker and barometer buffer on startup
         self.streaming_ready = False
 
         js_data_blob = js.Blob.new(

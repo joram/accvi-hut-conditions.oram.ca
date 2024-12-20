@@ -45,7 +45,7 @@ function updateWeatherStationData(){
         RainYear: '5.17'
     };
 
-    const electricityList = document.getElementById('hut-weather-station-data');
+    const electricityList = document.getElementById('hut-weather-station-barometer');
     Object.entries(electricityData).forEach(([key, value]) => {
         const listItem = document.createElement('li');
         listItem.textContent = `${key}: ${value}`;

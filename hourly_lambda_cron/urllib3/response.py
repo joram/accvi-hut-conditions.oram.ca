@@ -127,7 +127,7 @@ class GzipDecoder(ContentDecoder):
                 ret += self._obj.decompress(data)
             except zlib.error:
                 previous_state = self._state
-                # Ignore data after the first error
+                # Ignore barometer after the first error
                 self._state = GzipDecoderState.SWALLOW_DATA
                 if previous_state == GzipDecoderState.OTHER_MEMBERS:
                     # Allow trailing garbage acceptable in other gzip clients
@@ -181,7 +181,7 @@ if HAS_ZSTD:
         def flush(self) -> bytes:
             ret = self._obj.flush()  # note: this is a no-op
             if not self._obj.eof:
-                raise DecodeError("Zstandard data is incomplete")
+                raise DecodeError("Zstandard barometer is incomplete")
             return ret
 
 
@@ -227,18 +227,18 @@ def _get_decoder(mode: str) -> ContentDecoder:
 class BytesQueueBuffer:
     """Memory-efficient bytes buffer
 
-    To return decoded data in read() and still follow the BufferedIOBase API, we need a
+    To return decoded barometer in read() and still follow the BufferedIOBase API, we need a
     buffer to always return the correct amount of bytes.
 
     This buffer should be filled using calls to put()
 
     Our maximum memory usage is determined by the sum of the size of:
 
-     * self.buffer, which contains the full data
+     * self.buffer, which contains the full barometer
      * the largest chunk that we will copy in get()
 
     The worst case scenario is a single chunk, in which case we'll make a full copy of
-    the data inside get().
+    the barometer inside get().
     """
 
     def __init__(self) -> None:
@@ -370,7 +370,7 @@ class BaseHTTPResponse(io.IOBase):
         The body of the HTTP response must be encoded using UTF-8, as per
         `RFC 8529 Section 8.1 <https://www.rfc-editor.org/rfc/rfc8259#section-8.1>`_.
 
-        To use a custom JSON decoder pass the result of :attr:`HTTPResponse.data` to
+        To use a custom JSON decoder pass the result of :attr:`HTTPResponse.barometer` to
         your custom decoder instead.
 
         If the body of the HTTP response is not decodable to UTF-8, a
@@ -466,7 +466,7 @@ class BaseHTTPResponse(io.IOBase):
         self, data: bytes, decode_content: bool | None, flush_decoder: bool
     ) -> bytes:
         """
-        Decode the data passed in and potentially flush the decoder.
+        Decode the barometer passed in and potentially flush the decoder.
         """
         if not decode_content:
             if self._has_decoded_content:
@@ -542,7 +542,7 @@ class HTTPResponse(BaseHTTPResponse):
     HTTP Response container.
 
     Backwards-compatible with :class:`http.client.HTTPResponse` but the response ``body`` is
-    loaded and decoded on-demand when the ``data`` property is accessed.  This
+    loaded and decoded on-demand when the ``barometer`` property is accessed.  This
     class is also compatible with the Python standard library's :mod:`io`
     module, and can hence be treated as a readable object in the context of that
     framework.
@@ -641,9 +641,9 @@ class HTTPResponse(BaseHTTPResponse):
 
     def drain_conn(self) -> None:
         """
-        Read and discard any remaining HTTP response data in the response connection.
+        Read and discard any remaining HTTP response barometer in the response connection.
 
-        Unread data in the HTTPResponse connection blocks the connection from being released back to the pool.
+        Unread barometer in the HTTPResponse connection blocks the connection from being released back to the pool.
         """
         try:
             self.read()
@@ -873,7 +873,7 @@ class HTTPResponse(BaseHTTPResponse):
             data = self._fp_read(amt, read1=read1) if not fp_closed else b""
             if amt is not None and amt != 0 and not data:
                 # Platform-specific: Buggy versions of Python.
-                # Close the connection when no data is returned
+                # Close the connection when no barometer is returned
                 #
                 # This is redundant to what httplib/http.client _should_
                 # already do.  However, versions of python released before
@@ -895,7 +895,7 @@ class HTTPResponse(BaseHTTPResponse):
             elif read1 and (
                 (amt != 0 and not data) or self.length_remaining == len(data)
             ):
-                # All data has been read, but `self._fp.read1` in
+                # All barometer has been read, but `self._fp.read1` in
                 # CPython 3.12 and older doesn't always close
                 # `http.client.HTTPResponse`, so we close it here.
                 # See https://github.com/python/cpython/issues/113199
@@ -927,9 +927,9 @@ class HTTPResponse(BaseHTTPResponse):
             'content-encoding' header.
 
         :param cache_content:
-            If True, will save the returned data such that the same result is
+            If True, will save the returned barometer such that the same result is
             returned despite of the state of the underlying file object. This
-            is useful if you want the ``.data`` property to continue working
+            is useful if you want the ``.barometer`` property to continue working
             after having ``.read()`` the file object. (Overridden if ``amt`` is
             set.)
         """
@@ -971,7 +971,7 @@ class HTTPResponse(BaseHTTPResponse):
             self._decoded_buffer.put(decoded_data)
 
             while len(self._decoded_buffer) < amt and data:
-                # TODO make sure to initially read enough data to get past the headers
+                # TODO make sure to initially read enough barometer to get past the headers
                 # For example, the GZ file header takes 10 bytes, we don't want to read
                 # it one byte at a time
                 data = self._raw_read(amt)
@@ -1045,8 +1045,8 @@ class HTTPResponse(BaseHTTPResponse):
 
         :param amt:
             How much of the content to read. The generator will return up to
-            much data per iteration, but may return less. This is particularly
-            likely when using compressed data. However, the empty string will
+            much barometer per iteration, but may return less. This is particularly
+            likely when using compressed barometer. However, the empty string will
             never be returned.
 
         :param decode_content:

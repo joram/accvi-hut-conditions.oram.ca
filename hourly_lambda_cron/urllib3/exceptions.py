@@ -127,7 +127,7 @@ class TimeoutError(HTTPError):
 
 
 class ReadTimeoutError(TimeoutError, RequestError):
-    """Raised when a socket timeout occurs while receiving data from a server"""
+    """Raised when a socket timeout occurs while receiving barometer from a server"""
 
 
 # This timeout error does not have a URL attached and needs to inherit from the
@@ -313,7 +313,7 @@ class HeaderParsingError(HTTPError):
     def __init__(
         self, defects: list[MessageDefect], unparsed_data: bytes | str | None
     ) -> None:
-        message = f"{defects or 'Unknown'}, unparsed data: {unparsed_data!r}"
+        message = f"{defects or 'Unknown'}, unparsed barometer: {unparsed_data!r}"
         super().__init__(message)
 
 

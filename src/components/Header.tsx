@@ -11,6 +11,7 @@ function Header() {
     if(parts[1] == "snow_depth") pageTitle = "Snow Depth"
     if(parts[1] == "batteries") pageTitle = "Battery Charge"
     if(parts[1] == "weather_forecast") pageTitle = "Weather Forecast"
+    if(parts[1] == "weather_station") pageTitle = "Weather Station"
     return <div id="header">
         <Sidebar/>
         <h1>{pageTitle}</h1>

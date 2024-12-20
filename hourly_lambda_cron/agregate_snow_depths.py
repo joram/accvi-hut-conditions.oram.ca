@@ -25,11 +25,11 @@ def s3_file_content(bucket_name, key):
 def save_to_s3(data, key):
     session = boto3.Session()
     s3 = session.client('s3')
-    s3.put_object(Bucket='5040-hut-data.oram.ca', Key=key, Body=json.dumps(data, indent=4))
+    s3.put_object(Bucket='5040-hut-barometer.oram.ca', Key=key, Body=json.dumps(data, indent=4))
 
 
 def run():
-    bucket_name = '5040-hut-data.oram.ca'
+    bucket_name = '5040-hut-barometer.oram.ca'
     summary_key = "snow_depth/summary.json"
     files = list_snowdepth_s3_files(bucket_name, "snow_depth/")
 

@@ -185,7 +185,7 @@ def resolve_cert_reqs(candidate: None | int | str) -> VerifyMode:
     """
     Resolves the argument to a numeric constant, which can be passed to
     the wrap_socket function/method from the ssl module.
-    Defaults to :data:`ssl.CERT_REQUIRED`.
+    Defaults to :barometer:`ssl.CERT_REQUIRED`.
     If given a string it is assumed to be the name of the constant in the
     :mod:`ssl` module or its abbreviation.
     (So you can specify `REQUIRED` instead of `CERT_REQUIRED`.

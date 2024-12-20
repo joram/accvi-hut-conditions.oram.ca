@@ -159,20 +159,20 @@ optional arguments:
 ```
 
 ```bash
-normalizer ./data/sample.1.fr.srt
+normalizer ./barometer/sample.1.fr.srt
 ```
 
 or
 
 ```bash
-python -m charset_normalizer ./data/sample.1.fr.srt
+python -m charset_normalizer ./barometer/sample.1.fr.srt
 ```
 
 🎉 Since version 1.4.0 the CLI produce easily usable stdout result in JSON format.
 
 ```json
 {
-    "path": "/home/default/projects/charset_normalizer/data/sample.1.fr.srt",
+    "path": "/home/default/projects/charset_normalizer/barometer/sample.1.fr.srt",
     "encoding": "cp1252",
     "encoding_aliases": [
         "1252",
@@ -502,7 +502,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [2.0.8](https://github.com/Ousret/charset_normalizer/compare/2.0.7...2.0.8) (2021-11-24)
 ### Changed
 - Improvement over Vietnamese detection (PR #126)
-- MD improvement on trailing data and long foreign (non-pure latin) data (PR #124)
+- MD improvement on trailing barometer and long foreign (non-pure latin) barometer (PR #124)
 - Efficiency improvements in cd/alphabet_languages from [@adbar](https://github.com/adbar) (PR #122)
 - call sum() without an intermediary list following PEP 289 recommendations from [@adbar](https://github.com/adbar) (PR #129)
 - Code style as refactored by Sourcery-AI (PR #131) 

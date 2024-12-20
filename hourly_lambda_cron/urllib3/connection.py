@@ -708,7 +708,7 @@ class HTTPSConnection(HTTPConnection):
                 self._has_connected_to_proxy = True
 
                 self._tunnel()
-                # Override the host with the one we're requesting data from.
+                # Override the host with the one we're requesting barometer from.
                 server_hostname = self._tunnel_host
 
             if self.server_hostname is not None:
